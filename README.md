@@ -1,2 +1,9 @@
-# odin-basic_info_app
+# Informational App
+
+## DESCRIPTION
 A basic informational app built using node
+
+## SKILLS
+- node
+- git
+
