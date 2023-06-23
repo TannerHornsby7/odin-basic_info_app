@@ -1,36 +1,38 @@
-// set up node project to navigate between pages
-const http = require('http');
-const fs = require('fs');
-
-const server = http.createServer((req, res) => {
-    tag = ''
-    if (req.url === '/') {
-        tag = 'index'        
-    }
-    else if (req.url === '/contact-me') {
-        tag = 'contact-me'
-    }
-    else if (req.url === '/about') {
-        tag = 'about'
-    }
-    else {
-        tag = '404'
-    }
-
-    fs.readFile('./' + tag + '.html', (err, data) => {
-        if (err) {
-            console.log(err);
-            res.end();
-        }
-        else {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write(data);
-            res.end();
-        }
-    });
-});
-
+// import express
+// import express
+const express = require('express');
+const app = express();
 const port = 3000;
-server.listen(port, () => {
-    console.log(`Listening on http://localhost:${port}`);
-});
+
+// serve static files for each html page
+const path = require('path');
+
+// serve index page for root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname + '/index.html'));
+    }
+);
+
+// serve about page
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname + '/about.html'));
+    }
+);
+
+// serve contact page
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname + '/contact-me.html'));
+    }
+);
+
+// serve 404 page
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/404.html'));
+    }
+);
+
+// set up the server
+app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+    }
+);
